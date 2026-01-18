@@ -5,14 +5,13 @@ export type ConversationalHandlerResult = {
   meta?: Record<string, unknown>;
 };
 
-/**
- * IMPORTANT:
- * patientService.ts is passing an OsceCaseV2 object in some calls.
- * So we MUST accept unknown (not string) to satisfy TS.
- */
 export const conversationalHandler = {
+  /**
+   * Accept ANY input (string, object, OsceCaseV2, etc.)
+   * and make other args optional.
+   */
   async generateResponse(
-    _input: unknown,
+    _input: any,
     _maybeUserId?: string,
     _maybeSessionId?: string
   ): Promise<ConversationalHandlerResult> {
