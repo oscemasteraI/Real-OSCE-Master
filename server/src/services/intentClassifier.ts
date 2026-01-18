@@ -7,9 +7,11 @@ export type IntentClassification = {
 };
 
 /**
- * TODO: Replace with your real intent classification logic.
- * This stub exists to unblock TypeScript compilation on Render.
+ * patientService.ts is calling intentClassifier.classify(...)
+ * so we export an object with a classify() method.
  */
-export async function intentClassifier(_text: string): Promise<IntentClassification> {
-  return { intent: "unknown", confidence: 0.0 };
-}
+export const intentClassifier = {
+  async classify(_text: string): Promise<IntentClassification> {
+    return { intent: "unknown", confidence: 0.0 };
+  }
+};
