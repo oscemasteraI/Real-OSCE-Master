@@ -2,16 +2,19 @@
 
 import dotenv from 'dotenv';
 import path from 'path';
+import fs from 'fs';
 
 // Load Env
 const envPath = path.resolve(__dirname, '../../.env'); // Define envPath here
 console.log("Loading env from:", envPath);
 dotenv.config({ path: envPath });
 
-// Set Google Credentials for Vertex AI (mocking what env.ts does)
-const keyPath = path.resolve(__dirname, '../../../osce-ai-sim-d5b457979ae1.json');
-process.env.GOOGLE_APPLICATION_CREDENTIALS = keyPath;
-console.log("Credentials Path:", keyPath);
+// Set Google Credentials for Vertex AI
+const credentialsPath = process.env.GOOGLE_APPLICATION_CREDENTIALS || '/opt/render/project/src/server/osce-ai-sim.json';
+if (fs.existsSync(credentialsPath)) {
+    process.env.GOOGLE_APPLICATION_CREDENTIALS = credentialsPath;
+}
+console.log("Credentials Path:", credentialsPath);
 
 
 // Now import services (after env is loaded)

@@ -6,16 +6,14 @@ const envPath = path.resolve(__dirname, '../../.env');
 console.log("[EnvLoader] Loading .env from:", envPath);
 dotenv.config({ path: envPath });
 
-// Set Google Cloud Credentials for Vertex AI & TTS
-// Set Google Cloud Credentials for Vertex AI & TTS
-const keyPath = path.resolve(__dirname, '../../../osce-ai-sim-d5b457979ae1.json');
-process.env.GOOGLE_APPLICATION_CREDENTIALS = keyPath;
-console.log("[EnvLoader] Set GOOGLE_APPLICATION_CREDENTIALS to:", keyPath);
-
-// Check if file exists
+// Use GOOGLE_APPLICATION_CREDENTIALS from environment
 import fs from 'fs';
-if (!fs.existsSync(keyPath)) {
-    console.error("[EnvLoader] FATAL: Google Cloud JSON Key not found at:", keyPath);
+
+const credentialsPath = process.env.GOOGLE_APPLICATION_CREDENTIALS || '/opt/render/project/src/server/osce-ai-sim.json';
+
+if (!fs.existsSync(credentialsPath)) {
+    console.error("[EnvLoader] FATAL: Google Cloud JSON Key not found at:", credentialsPath);
 } else {
-    console.log("[EnvLoader] Google Cloud JSON Key found.");
+    console.log("[EnvLoader] Google Cloud JSON Key found at:", credentialsPath);
+    process.env.GOOGLE_APPLICATION_CREDENTIALS = credentialsPath;
 }

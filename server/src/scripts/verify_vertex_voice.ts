@@ -8,16 +8,18 @@ import fs from 'fs';
 const envPath = path.resolve(__dirname, '../../.env');
 dotenv.config({ path: envPath });
 
-// Load Auth
-const keyPath = path.resolve(__dirname, '../../osce-ai-sim-d5b457979ae1.json');
-process.env.GOOGLE_APPLICATION_CREDENTIALS = keyPath;
+// Load Auth from environment or use fallback
+const credentialsPath = process.env.GOOGLE_APPLICATION_CREDENTIALS || '/opt/render/project/src/server/osce-ai-sim.json';
+if (fs.existsSync(credentialsPath)) {
+    process.env.GOOGLE_APPLICATION_CREDENTIALS = credentialsPath;
+}
 
 async function verifyVertexAndVoice() {
     console.log("--- Verifying Vertex AI & SSML Voice ---");
 
     // 1. Check Auth File
-    if (!fs.existsSync(keyPath)) {
-        console.error("Fatal: JSON Key not found at", keyPath);
+    if (!fs.existsSync(credentialsPath)) {
+        console.error("Fatal: JSON Key not found at", credentialsPath);
         return;
     }
     console.log("JSON Key exists.");

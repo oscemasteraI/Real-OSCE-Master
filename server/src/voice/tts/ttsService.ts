@@ -15,8 +15,8 @@ export class GoogleTTSService implements TTSService {
     private serviceAccountPath: string;
 
     constructor() {
-        // Path to your service account key
-        this.serviceAccountPath = path.resolve(__dirname, '../../../osce-ai-sim-d5b457979ae1.json');
+        // Use GOOGLE_APPLICATION_CREDENTIALS from environment or fallback
+        this.serviceAccountPath = process.env.GOOGLE_APPLICATION_CREDENTIALS || '/opt/render/project/src/server/osce-ai-sim.json';
 
         // Verify the key file exists
         if (!fs.existsSync(this.serviceAccountPath)) {

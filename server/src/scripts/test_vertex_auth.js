@@ -1,14 +1,15 @@
 const { VertexAI } = require('@google-cloud/vertexai');
-const path = require('path');
 const fs = require('fs');
 require('dotenv').config();
 
-const keyPath = path.resolve(__dirname, '../../../osce-ai-sim-d5b457979ae1.json');
-process.env.GOOGLE_APPLICATION_CREDENTIALS = keyPath;
+const credentialsPath = process.env.GOOGLE_APPLICATION_CREDENTIALS || '/opt/render/project/src/server/osce-ai-sim.json';
+if (fs.existsSync(credentialsPath)) {
+    process.env.GOOGLE_APPLICATION_CREDENTIALS = credentialsPath;
+}
 
 async function testAuth() {
-    console.log("Key Path:", keyPath);
-    console.log("Exists:", fs.existsSync(keyPath));
+    console.log("Credentials Path:", credentialsPath);
+    console.log("Exists:", fs.existsSync(credentialsPath));
     console.log("GOOGLE_APPLICATION_CREDENTIALS:", process.env.GOOGLE_APPLICATION_CREDENTIALS);
 
     const project = 'osce-ai-sim';
