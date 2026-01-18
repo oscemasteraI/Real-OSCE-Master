@@ -1,21 +1,36 @@
-// server/src/services/intentClassifier.ts
+// server/src/services/intentRouter.ts
 
-// Keep IntentCode flexible
-export type IntentCode = string;
+// patientService.ts expects these enum members to exist
+export enum IntentCategory {
+  CONVERSATIONAL = "CONVERSATIONAL",
+  UNCLEAR = "UNCLEAR",
 
-export type IntentClassification = {
-  // patientService.ts expects `.intent`
-  intent: IntentCode;
+  HISTORY = "HISTORY",
+  EXAM = "EXAM",
+  MANAGEMENT = "MANAGEMENT",
+  SUMMARY = "SUMMARY",
+  OTHER = "OTHER"
+}
+
+export type IntentRouteResult = {
+  category: IntentCategory;
   confidence?: number;
   meta?: Record<string, unknown>;
 };
 
 /**
- * patientService.ts calls intentClassifier.classify(...) and then reads `.intent`.
- * Allow optional 2nd arg (context/case).
+ * patientService.ts seems to call intentRouter.route(...) with varying args.
+ * Make it permissive: accept a string OR an object (and ignore extra args).
  */
-export const intentClassifier = {
-  async classify(_text: string, _context?: unknown): Promise<IntentClassification> {
-    return { intent: "unknown", confidence: 0.0 };
+export const intentRouter = {
+  async route(
+    input: string | { text: string; userId?: string; sessionId?: string },
+    _maybeUserId?: string,
+    _maybeSessionId?: string
+  ): Promise<IntentRouteResult> {
+    const text = typeof input === "string" ? input : input?.text ?? "";
+    // Basic stub routing
+    if (!text.trim()) return { category: IntentCategory.UNCLEAR, confidence: 0.0 };
+    return { category: IntentCategory.CONVERSATIONAL, confidence: 0.1 };
   }
 };
