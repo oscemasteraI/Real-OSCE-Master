@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "osce-ai-sim",
+  "private_key_id": "d5b457979ae1fbb7850e3c39bbe44318c0c5152f",
+  "private_key": "-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n",
+  "client_email": "osce-ai-sim@osce-ai-sim.iam.gserviceaccount.com",
+  "client_id": "108913279913613271032",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/osce-ai-sim%40osce-ai-sim.iam.gserviceaccount.com"
+}
